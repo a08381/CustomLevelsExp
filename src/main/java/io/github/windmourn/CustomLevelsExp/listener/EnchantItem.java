@@ -12,10 +12,9 @@ public class EnchantItem implements Listener {
     public void onEnchantItem(EnchantItemEvent event) {
         Player player = event.getEnchanter();
         if (player != null) {
-            int levelCost = event.getExpLevelCost();
+            int levelCost = event.whichButton() + 1;
             int level = CustomExpUtil.getLevel(player);
             CustomExpUtil.setLevel(player, level - levelCost);
-            event.setExpLevelCost(0);
         }
     }
 

@@ -9,18 +9,14 @@ import org.bukkit.entity.Player;
 import pw.yumc.YumCore.commands.CommandSub;
 import pw.yumc.YumCore.commands.annotation.Cmd;
 import pw.yumc.YumCore.commands.annotation.Help;
-import pw.yumc.YumCore.commands.annotation.Tab;
 import pw.yumc.YumCore.commands.interfaces.Executor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainCommand implements Executor {
 
     private Main main = Main.INSTANCE;
 
     public MainCommand() {
-        new CommandSub("customlevelsexp", this, this);
+        new CommandSub("customlevelsexp", this);
     }
 
     @Cmd(aliases = "exp", executor = Cmd.Executor.PLAYER)
@@ -83,14 +79,6 @@ public class MainCommand implements Executor {
         sender.sendMessage(ChatColor.GREEN + "Reload Completed.");
     }
 
-    @Tab
-    public List<String> listtab(CommandSender sender, String label, String... args) {
-        if (args.length == 2 && (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("give"))) {
-            return getOnlinePlayersName();
-        }
-        return null;
-    }
-
     private void giveExpOrLevel(Player player, String exp) {
         if (exp.toLowerCase().endsWith("l")) {
             int level = Integer.parseInt(exp.substring(0, exp.length() - 1));
@@ -107,14 +95,6 @@ public class MainCommand implements Executor {
         } else {
             CustomExpUtil.setTotalExperience(player, Integer.parseInt(exp));
         }
-    }
-
-    private List<String> getOnlinePlayersName() {
-        List<String> list = new ArrayList<>();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            list.add(player.getName());
-        }
-        return list;
     }
 
 }

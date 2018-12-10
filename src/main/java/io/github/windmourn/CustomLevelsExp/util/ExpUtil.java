@@ -12,7 +12,7 @@ public class ExpUtil {
      */
     public static int getLevel(int exp) {
         int level = 0;
-        for (int i = getExpAtLevel(level); i < exp; ) {
+        for (int i = getExpAtLevel(level); i <= exp; ) {
             exp -= i;
             level++;
             i = getExpAtLevel(level);

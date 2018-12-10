@@ -8,7 +8,6 @@ import io.github.windmourn.CustomLevelsExp.command.MainCommand;
 import io.github.windmourn.CustomLevelsExp.config.Config;
 import io.github.windmourn.CustomLevelsExp.entry.TotalExp;
 import io.github.windmourn.CustomLevelsExp.hook.PlaceholderAPIHook;
-import io.github.windmourn.CustomLevelsExp.listener.EnchantItem;
 import io.github.windmourn.CustomLevelsExp.listener.ExpChange;
 import io.github.windmourn.CustomLevelsExp.listener.PlayerLogin;
 import io.github.windmourn.CustomLevelsExp.listener.PlayerQuit;
@@ -56,7 +55,7 @@ public class Main extends JavaPlugin {
         if (pm.isPluginEnabled("PlaceholderAPI")) PlaceholderAPIHook.hook();
 
         pm.registerEvents(new ExpChange(), this);
-        pm.registerEvents(new EnchantItem(), this);
+        //pm.registerEvents(new EnchantItem(), this);
         pm.registerEvents(new PlayerLogin(), this);
         pm.registerEvents(new PlayerQuit(), this);
 

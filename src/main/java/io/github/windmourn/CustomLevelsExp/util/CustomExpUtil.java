@@ -52,7 +52,7 @@ public class CustomExpUtil {
      */
     public static int getLevel(int exp) {
         int level = 0;
-        for (int i = getExpAtLevel(level); i < exp; ) {
+        for (int i = getExpAtLevel(level); i <= exp; ) {
             exp -= i;
             level++;
             i = getExpAtLevel(level);
@@ -120,8 +120,9 @@ public class CustomExpUtil {
      * @return
      */
     public static int getExpUntilNextLevel(Player player) {
-        int exp = getExp(getTotalExperience(player));
-        return getExpUntilNextLevel(exp, getLevel(exp));
+        int totalExp = getTotalExperience(player);
+        int exp = getExp(totalExp);
+        return getExpUntilNextLevel(exp, getLevel(totalExp));
     }
 
     /**
@@ -161,7 +162,7 @@ public class CustomExpUtil {
      * @return
      */
     public static int getExpAtLevel(Player player) {
-        return getExpAtLevel(player);
+        return getExpAtLevel(getLevel(player));
     }
 
 }
