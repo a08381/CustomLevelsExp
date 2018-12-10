@@ -1,0 +1,16 @@
+name: ${project.name}
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.Main
+author: Windmourn
+softdepend: [PlaceholderAPI]
+commands:
+  customlevelsexp:
+    description: '等级经验自定义'
+    usage: '/<command> help'
+    permission: customlevelsexp.use
+    aliases: [customlevel, customexp, levelsexp, cle]
+permissions:
+  customlevelsexp.use:
+    default: true
+  customlevelsexp.admin:
+    default: op

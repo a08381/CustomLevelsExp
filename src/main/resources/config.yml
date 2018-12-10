@@ -1,0 +1,30 @@
+# ################################# #
+#          CustomLevelsExp          #
+# ################################# #
+#   Let you control each levels of  #
+#                EXP                #
+# ################################# #
+
+# Here is the data settings, this sample is for sqlite
+# if you want to use another data source, please check
+# https://vladmihalcea.com/jdbc-driver-connection-url-strings/
+# https://blog.csdn.net/ring0hx/article/details/6152528
+dataSource:
+  driver: org.sqlite.JDBC
+  url: jdbc:sqlite:$datafolder/PlayersExp.db
+  username: Windmourn
+  password: Windmourn
+
+# Save data from caches every savetime (sec).
+savetime: 30
+
+# this formula if based on JavaScript Engine.
+# you can use any of js rules on it.
+formula: |
+  if (level <= 15) {
+      return 2 * level + 7;
+  }
+  if ((level >= 16) && (level <= 30)) {
+      return 5 * level - 38;
+  }
+  return 9 * level - 158;
