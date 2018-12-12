@@ -7,12 +7,13 @@ import com.mengcraft.simpleorm.EbeanHandler;
 import io.github.windmourn.CustomLevelsExp.command.MainCommand;
 import io.github.windmourn.CustomLevelsExp.config.Config;
 import io.github.windmourn.CustomLevelsExp.entry.TotalExp;
+import io.github.windmourn.CustomLevelsExp.exp.CustomExp;
 import io.github.windmourn.CustomLevelsExp.hook.PlaceholderAPIHook;
 import io.github.windmourn.CustomLevelsExp.listener.ExpChange;
 import io.github.windmourn.CustomLevelsExp.listener.PlayerLogin;
 import io.github.windmourn.CustomLevelsExp.listener.PlayerQuit;
 import io.github.windmourn.CustomLevelsExp.task.DataSaveTask;
-import io.github.windmourn.CustomLevelsExp.util.CustomExpUtil;
+import lombok.val;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +22,11 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Collection;
 
 public class Main extends JavaPlugin {
@@ -44,13 +50,38 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        PluginManager pm = getServer().getPluginManager();
+
+        new CustomExp();
+
         ScriptEngineManager manager = new ScriptEngineManager();
         engine = manager.getEngineByName("nashorn");
+        if (engine == null) {
+            val dirs = System.getProperty("java.ext.dirs").split(File.pathSeparator);
+            for (String dir : dirs) {
+                File nashorn = new File(dir, "nashorn.jar");
+                if (nashorn.exists()) {
+                    try {
+                        Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+                        // 设置方法的访问权限
+                        method.setAccessible(true);
+                        // 获取系统类加载器
+                        URL url = nashorn.toURI().toURL();
+                        method.invoke(Thread.currentThread().getContextClassLoader(), url);
+                        manager = new ScriptEngineManager();
+                        engine = manager.getEngineByName("nashorn");
+                    } catch (NoSuchMethodException | MalformedURLException | IllegalAccessException | InvocationTargetException | NullPointerException ignored) {
+                    }
+                }
+            }
+        }
         if (engine == null) engine = manager.getEngineByName("ECMAScript");
+        if (engine == null) {
+            pm.disablePlugin(this);
+            return;
+        }
 
         reloadConfig();
-
-        PluginManager pm = getServer().getPluginManager();
 
         if (pm.isPluginEnabled("PlaceholderAPI")) PlaceholderAPIHook.hook();
 
@@ -103,7 +134,7 @@ public class Main extends JavaPlugin {
         try {
             engine.eval("function getExpAtLevel(level) {" + newConfig.getFormula() + "}");
             formula = (Invocable) engine;
-            CustomExpUtil.map.clear();
+            CustomExp.getInstance().map.clear();
         } catch (ScriptException e) {
             e.printStackTrace();
         }

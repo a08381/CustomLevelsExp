@@ -2,6 +2,7 @@ package io.github.windmourn.CustomLevelsExp.util;
 
 import io.github.windmourn.CustomLevelsExp.Main;
 import io.github.windmourn.CustomLevelsExp.entry.TotalExp;
+import io.github.windmourn.CustomLevelsExp.exp.CustomExp;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -23,7 +24,7 @@ public class PlayerUtil {
             if (exp == null) {
                 exp = main.createEntityBean(TotalExp.class);
                 exp.setPlayerName(player.getName());
-                exp.setTotalExp(ExpUtil.getTotalExperience(player));
+                exp.setTotalExp(CustomExp.getBukkitExp().getTotalExp(player));
                 main.save(exp);
             }
             map.put(player.getName(), exp);
@@ -41,7 +42,7 @@ public class PlayerUtil {
                 exp = main.createEntityBean(TotalExp.class);
                 exp.setPlayerName(playername);
                 Player player = Bukkit.getPlayerExact(playername);
-                exp.setTotalExp(player == null ? 0 : ExpUtil.getTotalExperience(player));
+                exp.setTotalExp(player == null ? 0 : CustomExp.getBukkitExp().getTotalExp(player));
                 main.save(exp);
             }
             map.put(playername, exp);

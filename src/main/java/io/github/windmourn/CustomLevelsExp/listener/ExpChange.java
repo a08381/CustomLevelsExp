@@ -1,6 +1,6 @@
 package io.github.windmourn.CustomLevelsExp.listener;
 
-import io.github.windmourn.CustomLevelsExp.util.CustomExpUtil;
+import io.github.windmourn.CustomLevelsExp.exp.CustomExp;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +12,7 @@ public class ExpChange implements Listener {
     public void onExpChange(PlayerExpChangeEvent event) {
         int exp = event.getAmount();
         Player player = event.getPlayer();
-        CustomExpUtil.setTotalExperience(player, CustomExpUtil.getTotalExperience(player) + exp);
+        CustomExp.getInstance().setTotalExp(player, CustomExp.getInstance().getTotalExp(player) + exp);
         event.setAmount(0);
     }
 

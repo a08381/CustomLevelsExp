@@ -1,7 +1,7 @@
 package io.github.windmourn.CustomLevelsExp.command;
 
 import io.github.windmourn.CustomLevelsExp.Main;
-import io.github.windmourn.CustomLevelsExp.util.CustomExpUtil;
+import io.github.windmourn.CustomLevelsExp.exp.CustomExp;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -23,21 +23,21 @@ public class MainCommand implements Executor {
     @Help("Get exp in this level.")
     public void exp(CommandSender sender) {
         Player player = (Player) sender;
-        sender.sendMessage(String.format("You have %s exp upon the level %s.", CustomExpUtil.getExp(player), CustomExpUtil.getLevel(player)));
+        sender.sendMessage(String.format("You have %s exp upon the level %s.", CustomExp.getInstance().getExp(player), CustomExp.getInstance().getLevel(player)));
     }
 
     @Cmd(aliases = "need", executor = Cmd.Executor.PLAYER)
     @Help("Get exp needs to next level.")
     public void need(CommandSender sender) {
         Player player = (Player) sender;
-        sender.sendMessage(String.format("You need %s exp to next level.", CustomExpUtil.getExpUntilNextLevel(player)));
+        sender.sendMessage(String.format("You need %s exp to next level.", CustomExp.getInstance().getExpUntilNextLevel(player)));
     }
 
     @Cmd(aliases = "totalexp", executor = Cmd.Executor.PLAYER)
     @Help("Get Total Exp.")
     public void totalExp(CommandSender sender) {
         Player player = (Player) sender;
-        sender.sendMessage(String.format("Your total Exp is %s", CustomExpUtil.getTotalExperience(player)));
+        sender.sendMessage(String.format("Your total Exp is %s", CustomExp.getInstance().getTotalExp(player)));
     }
 
     @Cmd(aliases = "give", permission = "customlevelsexp.admin", minimumArguments = 1)
@@ -82,18 +82,18 @@ public class MainCommand implements Executor {
     private void giveExpOrLevel(Player player, String exp) {
         if (exp.toLowerCase().endsWith("l")) {
             int level = Integer.parseInt(exp.substring(0, exp.length() - 1));
-            CustomExpUtil.setLevel(player, CustomExpUtil.getLevel(player) + level);
+            CustomExp.getInstance().setLevel(player, CustomExp.getInstance().getLevel(player) + level);
         } else {
-            CustomExpUtil.setTotalExperience(player, CustomExpUtil.getTotalExperience(player) + Integer.parseInt(exp));
+            CustomExp.getInstance().setTotalExp(player, CustomExp.getInstance().getTotalExp(player) + Integer.parseInt(exp));
         }
     }
 
     private void setExpOrLevel(Player player, String exp) {
         if (exp.toLowerCase().endsWith("l")) {
             int level = Integer.parseInt(exp.substring(0, exp.length() - 1));
-            CustomExpUtil.setLevel(player, level);
+            CustomExp.getInstance().setLevel(player, level);
         } else {
-            CustomExpUtil.setTotalExperience(player, Integer.parseInt(exp));
+            CustomExp.getInstance().setTotalExp(player, Integer.parseInt(exp));
         }
     }
 

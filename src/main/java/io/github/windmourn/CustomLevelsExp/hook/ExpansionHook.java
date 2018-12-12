@@ -1,6 +1,6 @@
 package io.github.windmourn.CustomLevelsExp.hook;
 
-import io.github.windmourn.CustomLevelsExp.util.CustomExpUtil;
+import io.github.windmourn.CustomLevelsExp.exp.CustomExp;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -24,16 +24,16 @@ public class ExpansionHook extends PlaceholderExpansion {
     public String onPlaceholderRequest(Player p, String params) {
         switch (params.toLowerCase()) {
             case "need": {
-                return String.valueOf(CustomExpUtil.getExpUntilNextLevel(p));
+                return String.valueOf(CustomExp.getInstance().getExpUntilNextLevel(p));
             }
             case "exp": {
-                return String.valueOf(CustomExpUtil.getExp(p));
+                return String.valueOf(CustomExp.getInstance().getExp(p));
             }
             case "level": {
-                return String.valueOf(CustomExpUtil.getLevel(p));
+                return String.valueOf(CustomExp.getInstance().getLevel(p));
             }
             case "totalexp": {
-                return String.valueOf(CustomExpUtil.getTotalExperience(p));
+                return String.valueOf(CustomExp.getInstance().getTotalExp(p));
             }
             default:
                 return "";
