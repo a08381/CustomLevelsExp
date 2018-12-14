@@ -4,6 +4,7 @@ import io.github.windmourn.CustomLevelsExp.entry.ExpMode;
 import lombok.Getter;
 import lombok.Setter;
 import pw.yumc.YumCore.config.annotation.ConfigNode;
+import pw.yumc.YumCore.config.annotation.Default;
 import pw.yumc.YumCore.config.inject.InjectConfig;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class Config extends InjectConfig {
     @Getter
     @Setter
     @ConfigNode("mode")
+    @Default("EACH")
     public ExpMode expMode;
 
     @Getter
