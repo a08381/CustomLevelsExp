@@ -19,7 +19,7 @@ public class DataCreateTask extends BukkitRunnable {
         Player player = Bukkit.getPlayerExact(playername);
         if (player != null) {
             PlayerUtil.create(player);
-            int exp = CustomExp.getInstance().getTotalExp(player);
+            long exp = CustomExp.getInstance().getTotalExp(player);
             int newExp = CustomExp.getInstance().asyncTotalExperience(exp);
             CustomExp.getBukkitExp().setTotalExp(player, newExp);
         }

@@ -25,5 +25,5 @@ public class TotalExp {
     @Getter
     @Setter
     @Column(name = "totalexp", nullable = false)
-    public int totalExp;
+    public long totalExp;
 }
