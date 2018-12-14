@@ -1,24 +1,20 @@
 package io.github.windmourn.CustomLevelsExp.exp;
 
-import io.github.windmourn.CustomLevelsExp.Main;
 import io.github.windmourn.CustomLevelsExp.entry.TotalExp;
 import io.github.windmourn.CustomLevelsExp.util.PlayerUtil;
 import io.github.windmourn.CustomLevelsExp.util.ServerVersion;
 import org.bukkit.entity.Player;
 
-import javax.script.ScriptException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomExp extends IExp {
+public abstract class CustomExp extends IExp {
 
     private static BukkitExp bukkitExp;
     private static CustomExp instance;
     public Map<Integer, Integer> map = new HashMap<>();
-    private Main main;
 
     public CustomExp() {
-        main = Main.INSTANCE;
         instance = this;
         bukkitExp = ServerVersion.getServerVersion().isGreaterThanOrEqual("1.8")
                 ? new Exp_1_8()
@@ -66,19 +62,5 @@ public class CustomExp extends IExp {
         int exp2level = bukkitExp.getExpToLevel(level);
         int exp1 = getExp(exp) * bukkitExp.getExpAtLevel(level) / getExpAtLevel(level);
         return exp2level + exp1;
-    }
-
-    @Override
-    public int getExpAtLevel(int level) {
-        if (map.containsKey(level)) return map.get(level);
-        int exp = 0;
-        try {
-            Double d = (Double) main.getFormula().invokeFunction("getExpAtLevel", level);
-            exp = d.intValue();
-            if (exp != 0) map.put(level, exp);
-        } catch (NoSuchMethodException | ScriptException e) {
-            e.printStackTrace();
-        }
-        return exp;
     }
 }

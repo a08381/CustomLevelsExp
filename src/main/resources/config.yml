@@ -18,6 +18,11 @@ dataSource:
 # Save data from caches every savetime (sec).
 savetime: 30
 
+# Choose a mode that was used for this formula.
+# EACH is used to set the exp of each level.
+# TOTAL is used to set the total exp of reaching this level.
+mode: EACH
+
 # this formula if based on JavaScript Engine.
 # you can use any of js rules on it.
 formula: |

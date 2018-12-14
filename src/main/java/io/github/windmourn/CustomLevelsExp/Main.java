@@ -6,8 +6,11 @@ import com.mengcraft.simpleorm.DatabaseException;
 import com.mengcraft.simpleorm.EbeanHandler;
 import io.github.windmourn.CustomLevelsExp.command.MainCommand;
 import io.github.windmourn.CustomLevelsExp.config.Config;
+import io.github.windmourn.CustomLevelsExp.entry.ExpMode;
 import io.github.windmourn.CustomLevelsExp.entry.TotalExp;
+import io.github.windmourn.CustomLevelsExp.exp.CustomEach;
 import io.github.windmourn.CustomLevelsExp.exp.CustomExp;
+import io.github.windmourn.CustomLevelsExp.exp.CustomTotal;
 import io.github.windmourn.CustomLevelsExp.hook.PlaceholderAPIHook;
 import io.github.windmourn.CustomLevelsExp.listener.ExpChange;
 import io.github.windmourn.CustomLevelsExp.listener.PlayerLogin;
@@ -51,8 +54,6 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         PluginManager pm = getServer().getPluginManager();
-
-        new CustomExp();
 
         ScriptEngineManager manager = new ScriptEngineManager();
         engine = manager.getEngineByName("nashorn");
@@ -130,6 +131,11 @@ public class Main extends JavaPlugin {
     @Override
     public void reloadConfig() {
         newConfig.reload();
+        if (newConfig.getExpMode().equals(ExpMode.EACH)) {
+            new CustomEach();
+        } else {
+            new CustomTotal();
+        }
         initialize();
         try {
             engine.eval("function getExpAtLevel(level) {" + newConfig.getFormula() + "}");

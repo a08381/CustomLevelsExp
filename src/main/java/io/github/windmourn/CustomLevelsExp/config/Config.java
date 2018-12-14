@@ -1,5 +1,6 @@
 package io.github.windmourn.CustomLevelsExp.config;
 
+import io.github.windmourn.CustomLevelsExp.entry.ExpMode;
 import lombok.Getter;
 import lombok.Setter;
 import pw.yumc.YumCore.config.annotation.ConfigNode;
@@ -18,6 +19,11 @@ public class Config extends InjectConfig {
     @Setter
     @ConfigNode("savetime")
     public int savetime;
+
+    @Getter
+    @Setter
+    @ConfigNode("mode")
+    public ExpMode expMode;
 
     @Getter
     @Setter
